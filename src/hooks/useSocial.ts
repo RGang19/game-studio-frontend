@@ -226,7 +226,7 @@ export function useSocial(gameId: string): UseSocialReturn {
       } else if (platform === "instagram") {
         await navigator.clipboard.writeText(url);
       } else if (platform === "email") {
-        window.open(`mailto:?subject=${encodeURIComponent("Check out this awesome game!")}&body=${encodeURIComponent(`Play this game on GameStudio:\n\n${url}`)}`, "_self");
+        window.open(`mailto:?subject=${encodeURIComponent("Check out this awesome game!")}&body=${encodeURIComponent(`Play this game on Web3 Game Studio:\n\n${url}`)}`, "_self");
       }
 
       try {

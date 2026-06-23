@@ -6,7 +6,7 @@ import { useStudioContext } from "@/context/StudioContext";
 export const Route = createFileRoute("/_app/create")({
   head: () => ({
     meta: [
-      { title: "Create — GameStudio" },
+      { title: "Create — Web3 Game Studio" },
       { name: "description", content: "Describe your game in a prompt and let the agent build a playable version." },
     ],
   }),

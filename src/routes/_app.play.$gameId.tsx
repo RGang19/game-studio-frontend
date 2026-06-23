@@ -53,7 +53,7 @@ export const Route = createFileRoute("/_app/play/$gameId")({
     const template = gameTemplates.find((t: any) => t.id === params.gameId);
     return {
       meta: [
-        { title: `${template?.name ?? "Play"} - GameStudio` },
+        { title: `${template?.name ?? "Play"} - Web3 Game Studio` },
         { name: "description", content: "Play this game instantly from the social feed." },
       ],
     };

@@ -5,7 +5,7 @@ import { Crown, TrendingUp, Flame, Medal } from "lucide-react";
 export const Route = createFileRoute("/_app/leaderboard")({
   head: () => ({
     meta: [
-      { title: "Leaderboard — GameStudio" },
+      { title: "Leaderboard — Web3 Game Studio" },
       { name: "description", content: "Top creators and most played games ranked by plays this week." },
     ],
   }),

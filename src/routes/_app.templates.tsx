@@ -9,7 +9,7 @@ import { useStudioContext } from "@/context/StudioContext";
 export const Route = createFileRoute("/_app/templates")({
   head: () => ({
     meta: [
-      { title: "Templates — GameStudio" },
+      { title: "Templates — Web3 Game Studio" },
       { name: "description", content: "Start from a ready-made game template and remix it with a prompt." },
     ],
   }),

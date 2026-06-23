@@ -34,7 +34,7 @@ import {
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({
     meta: [
-      { title: "Profile — GameStudio" },
+      { title: "Profile — Web3 Game Studio" },
       { name: "description", content: "Your creator profile, stats, and published games." },
     ],
   }),

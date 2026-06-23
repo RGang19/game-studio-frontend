@@ -27,7 +27,7 @@ import { ownsGame } from "@/lib/identity";
 export const Route = createFileRoute("/_app/edit/$gameId")({
   head: () => ({
     meta: [
-      { title: "Edit Game — GameStudio" },
+      { title: "Edit Game — Web3 Game Studio" },
       { name: "description", content: "Tweak settings, chat with the agent, and reshape your game." },
     ],
   }),

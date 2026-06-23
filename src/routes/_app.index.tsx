@@ -40,7 +40,7 @@ import { api } from "@/lib/api";
 export const Route = createFileRoute("/_app/")({
   head: () => ({
     meta: [
-      { title: "Home - GameStudio" },
+      { title: "Home - Web3 Game Studio" },
       { name: "description", content: "Create, publish, and grow playable games with AI." },
     ],
   }),
@@ -305,7 +305,7 @@ function Home() {
       <header className="flex min-h-16 items-center justify-between gap-4 border-b-2 border-border px-4 py-2 sm:px-6">
         <div className="flex min-w-0 flex-1 items-center gap-4">
           <p className="hidden shrink-0 text-sm text-muted-foreground sm:block">
-            Welcome back, <span className="font-semibold text-foreground">GameStudio</span>
+            Welcome back, <span className="font-semibold text-foreground">Web3 Game Studio</span>
           </p>
           <label className="flex h-10 w-full max-w-md items-center gap-2 rounded-none border-2 border-black bg-white px-3 transition focus-within:shadow-[3px_3px_0_#101010]">
             <Search className="size-4 shrink-0 text-muted-foreground" />

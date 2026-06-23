@@ -32,10 +32,10 @@ export function Sidebar() {
       <Link to="/" className={`mb-1 block ${collapsed ? "px-0 text-center" : "px-2"}`}>
         <h1 className="border-2 border-black bg-primary p-4 font-display text-2xl font-black leading-none tracking-tight shadow-[5px_5px_0_#101010]">
           {collapsed ? (
-            <span className="block text-gradient text-lg">CS</span>
+            <span className="block text-gradient text-lg">W3</span>
           ) : (
             <>
-              <span className="block text-sidebar-foreground">GAME</span>
+              <span className="block text-sidebar-foreground">WEB3 GAME</span>
               <span className="block text-gradient">STUDIO</span>
             </>
           )}
