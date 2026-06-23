@@ -1,0 +1,495 @@
+@import "tailwindcss";
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@theme inline {
+  --font-display: "Orbitron", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-sans: "Space Grotesk", sans-serif;
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-green: var(--neon-green);
+  --color-neon-violet: var(--neon-violet);
+}
+
+:root {
+  --radius: 0.9rem;
+  --background: oklch(0.13 0.02 280);
+  --foreground: oklch(0.97 0.01 280);
+  --card: oklch(0.17 0.025 282);
+  --card-foreground: oklch(0.97 0.01 280);
+  --popover: oklch(0.16 0.025 282);
+  --popover-foreground: oklch(0.97 0.01 280);
+  --primary: oklch(0.7 0.25 330);
+  --primary-foreground: oklch(0.13 0.02 280);
+  --secondary: oklch(0.24 0.03 285);
+  --secondary-foreground: oklch(0.97 0.01 280);
+  --muted: oklch(0.22 0.025 285);
+  --muted-foreground: oklch(0.68 0.03 285);
+  --accent: oklch(0.8 0.18 195);
+  --accent-foreground: oklch(0.13 0.02 280);
+  --destructive: oklch(0.62 0.24 25);
+  --destructive-foreground: oklch(0.97 0.01 280);
+  --border: oklch(0.3 0.03 285 / 60%);
+  --input: oklch(0.28 0.03 285);
+  --ring: oklch(0.7 0.25 330);
+  --neon-pink: oklch(0.72 0.27 340);
+  --neon-cyan: oklch(0.82 0.16 195);
+  --neon-green: oklch(0.85 0.2 150);
+  --neon-violet: oklch(0.65 0.25 295);
+  --chart-1: oklch(0.72 0.27 340);
+  --chart-2: oklch(0.82 0.16 195);
+  --chart-3: oklch(0.85 0.2 150);
+  --chart-4: oklch(0.65 0.25 295);
+  --chart-5: oklch(0.8 0.18 70);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.72 0.27 340),
+    oklch(0.65 0.25 295),
+    oklch(0.82 0.16 195)
+  );
+  --gradient-pink: linear-gradient(160deg, oklch(0.72 0.27 340), oklch(0.6 0.27 300));
+  --gradient-green: linear-gradient(160deg, oklch(0.85 0.2 150), oklch(0.82 0.16 195));
+  --gradient-cyan: linear-gradient(160deg, oklch(0.82 0.16 195), oklch(0.65 0.25 270));
+  --gradient-warm: linear-gradient(160deg, oklch(0.85 0.19 80), oklch(0.7 0.22 30));
+  --shadow-neon: 0 0 30px -6px oklch(0.72 0.27 340 / 50%);
+  --shadow-card: 0 20px 50px -20px oklch(0 0 0 / 70%);
+  --sidebar: oklch(0.1 0.018 282);
+  --sidebar-foreground: oklch(0.9 0.01 280);
+  --sidebar-primary: oklch(0.72 0.27 340);
+  --sidebar-primary-foreground: oklch(0.13 0.02 280);
+  --sidebar-accent: oklch(0.2 0.03 285);
+  --sidebar-accent-foreground: oklch(0.97 0.01 280);
+  --sidebar-border: oklch(0.3 0.03 285 / 50%);
+  --sidebar-ring: oklch(0.72 0.27 340);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(60% 50% at 80% 0%, oklch(0.65 0.25 295 / 0.18), transparent 70%),
+      radial-gradient(50% 40% at 0% 100%, oklch(0.82 0.16 195 / 0.12), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+@utility text-gradient {
+  background-image: var(--gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@layer utilities {
+  .label-mono {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  @keyframes float-up {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-float-up {
+    animation: float-up 0.6s ease forwards;
+  }
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+}
+
+/* Arena editorial theme --------------------------------------------------- */
+:root {
+  --radius: 0;
+  --background: #f3f0e8;
+  --foreground: #101010;
+  --card: #ffffff;
+  --card-foreground: #101010;
+  --popover: #ffffff;
+  --popover-foreground: #101010;
+  --primary: #b9ff2c;
+  --primary-foreground: #101010;
+  --secondary: #e9e5da;
+  --secondary-foreground: #101010;
+  --muted: #e9e5da;
+  --muted-foreground: #55534d;
+  --accent: #ff5b42;
+  --accent-foreground: #101010;
+  --destructive: #ff5b42;
+  --destructive-foreground: #101010;
+  --border: #101010;
+  --input: #ffffff;
+  --ring: #b9ff2c;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #101010;
+  --sidebar-primary: #b9ff2c;
+  --sidebar-primary-foreground: #101010;
+  --sidebar-accent: #101010;
+  --sidebar-accent-foreground: #b9ff2c;
+  --sidebar-border: #101010;
+  --neon-pink: #ff5b42;
+  --neon-cyan: #b9ff2c;
+  --neon-green: #b9ff2c;
+  --neon-violet: #ff5b42;
+  --gradient-brand: linear-gradient(90deg, #101010 0 72%, #ff5b42 72% 86%, #b9ff2c 86%);
+  --shadow-neon: 6px 6px 0 #101010;
+  --shadow-card: 6px 6px 0 #101010;
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    background-image: none;
+    color: var(--foreground);
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  button, input, textarea, select { font-family: inherit; }
+  h1, h2, h3, .font-display {
+    font-family: "Archivo Black", Impact, "Arial Black", sans-serif;
+    letter-spacing: -.01em;
+  }
+}
+
+@layer utilities {
+  .label-mono { font-family: "Space Mono", ui-monospace, monospace; font-weight: 700; letter-spacing: .13em; }
+  .text-gradient { background-image: linear-gradient(90deg, #101010 0 62%, #ff5b42 62%); }
+  .shadow-card, .shadow-neon { box-shadow: 6px 6px 0 #101010; }
+  /* Brutalist tactile press: the element sinks into its hard shadow on hover. */
+  .shadow-press { transition: transform .12s ease, box-shadow .12s ease; }
+  .shadow-press:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 #101010; }
+  .shadow-press:active { transform: translate(6px, 6px); box-shadow: 0 0 0 #101010; }
+  .rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl { border-radius: 0 !important; }
+  .border, .border-b, .border-r, .border-t { border-color: #101010 !important; }
+  .bg-card { background-color: #fff !important; }
+  .bg-background { background-color: #f3f0e8 !important; }
+  .text-muted-foreground { color: #55534d !important; }
+  .bg-primary { background-color: #b9ff2c !important; color: #101010 !important; }
+  .text-primary { color: #101010 !important; }
+  .hover\:bg-primary:hover { background-color: #b9ff2c !important; color: #101010 !important; }
+}
+
+/*
+ * Game preview surface styles (canvas engine + HTML5 iframe).
+ * Ported from the original studio shell and re-themed onto the design tokens.
+ */
+.three-preview-wrap,
+.html5-preview-wrap {
+  position: relative;
+  width: 100%;
+  /* Match the canvas/game render ratio (960x540) so the surface fills the box
+     exactly — no letterboxed black bar. */
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: oklch(0.1 0.02 280);
+}
+
+.feed-game-frame--canvas .three-preview-wrap,
+.feed-game-frame--construct .html5-preview-wrap {
+  aspect-ratio: auto;
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+}
+
+.three-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.three-preview canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  touch-action: none;
+}
+
+.html5-preview-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.player-controls {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.player-controls span,
+.preview-hud span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: oklch(0.13 0.02 280 / 0.78);
+  color: var(--foreground);
+  padding: 8px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.preview-hud {
+  position: absolute;
+  left: 14px;
+  right: 72px;
+  bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  min-height: 22px;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  background: oklch(0.7 0.25 330 / 0.14);
+  color: var(--foreground);
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.fullscreen-button {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 4;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: oklch(0.13 0.02 280 / 0.82);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.fullscreen-button:hover {
+  background: oklch(0.2 0.03 285 / 0.92);
+}
+
+.generated-badge {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  z-index: 4;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: oklch(0.13 0.02 280 / 0.82);
+  color: var(--foreground);
+  pointer-events: none;
+}
+
+.feed-game-frame {
+  position: relative;
+}
+
+.feed-game-frame:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  background: #000;
+}
+
+.feed-game-frame:fullscreen .three-preview-wrap,
+.feed-game-frame:fullscreen .html5-preview-wrap {
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.feed-game-frame:fullscreen .three-preview,
+.feed-game-frame:fullscreen .three-preview canvas,
+.feed-game-frame:fullscreen iframe {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* The desktop creator bar (h-[76px], lg:flex) overlays the bottom of the
+   fullscreen frame. Games scale to fill their frame, so the surface must stop
+   above the bar or the bottom of the playfield hides behind it. */
+@media (min-width: 1024px) {
+  .feed-game-frame:fullscreen .three-preview-wrap,
+  .feed-game-frame:fullscreen .html5-preview-wrap,
+  .feed-game-frame:fullscreen .three-preview,
+  .feed-game-frame:fullscreen .three-preview canvas,
+  .feed-game-frame:fullscreen iframe {
+    height: calc(100vh - 76px);
+  }
+}
+
+.feed-game-frame .fullscreen-button:not(.fullscreen-button--play-page) {
+  display: none;
+}
+
+.fullscreen-button--play-page {
+  z-index: 12;
+  width: 54px;
+  height: 54px;
+  border-color: var(--primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 24px oklch(0.72 0.27 340 / 0.28);
+}
+
+.feed-game-frame--leaderboard-open:not(:fullscreen) .fullscreen-button--play-page {
+  right: 92px;
+}
+
+/* Editor live preview: the game surface fills the whole panel (the frame
+   centers and letterboxes each game inside), instead of a 16:9 strip pinned
+   to the top with dead space below. */
+.editor-game-frame .three-preview-wrap,
+.editor-game-frame .html5-preview-wrap {
+  aspect-ratio: auto;
+  height: 100%;
+  width: 100%;
+}
