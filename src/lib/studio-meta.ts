@@ -14,15 +14,29 @@ export function getThumbnailUrl(templateId: string): string {
   return actionThumbnail;
 }
 
+// Backend may serve a generated cover from a relative `/api/thumbnails/<id>`
+// path; prefix it with the API origin so it resolves regardless of where the
+// frontend is hosted.
+const apiOrigin = (import.meta.env.VITE_API_URL ?? "")
+  .replace(/\/$/, "")
+  .replace(/\/api$/, "");
+
 /**
- * Resolves every game to the refreshed thumbnail set, grouped by its template
- * category so old generated and backend-served covers are not displayed.
+ * Resolves a game to its cover. Prefers the real generated image the backend
+ * produced (CDN URL or backend-served `/api/thumbnails/...`); only falls back
+ * to the static category art when there is no real cover yet (missing or a
+ * placeholder SVG produced before generation finished).
  */
 export function resolveGameThumbnail(game: {
   id?: string;
   templateId?: string;
   thumbnailUrl?: string | null;
 }): string {
+  const url = game?.thumbnailUrl;
+  if (url && !url.startsWith("data:image/svg+xml")) {
+    if (url.startsWith("/api/")) return `${apiOrigin}${url}`;
+    return url;
+  }
   return getThumbnailUrl(game?.templateId ?? game?.id ?? "simple-agent-game");
 }
 
