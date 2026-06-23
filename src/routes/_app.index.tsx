@@ -105,6 +105,7 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Game[]>([]);
   const [, setIsSearching] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   useEffect(() => {
     const query = searchQuery.trim();
@@ -289,6 +290,32 @@ function Home() {
     ];
   }, [searchQuery, shelves, searchResults]);
 
+  // Every game we know about, de-duplicated — the pool a genre card filters.
+  const genreGames = useMemo(() => {
+    if (!selectedGenre) return [];
+    const needle = selectedGenre.trim().toLowerCase();
+    const pool = shelves
+      .flatMap((shelf) => shelf.games)
+      .filter((game, index, self) =>
+        self.findIndex(
+          (g) => g.templateId === game.templateId || g.title === game.title,
+        ) === index,
+      );
+    return pool.filter((game) => {
+      const category = (game.category || "").toLowerCase();
+      return category.includes(needle) || needle.includes(category);
+    });
+  }, [selectedGenre, shelves]);
+
+  const openGameById = useCallback(
+    (game: Game) => {
+      if (game.templateId) {
+        navigate({ to: "/play/$gameId", params: { gameId: game.templateId } });
+      }
+    },
+    [navigate],
+  );
+
   const create = () => {
     const buildPrompt = prompt.trim();
     if (!buildPrompt || studio.activeBuild?.phase === "building") return;
@@ -400,7 +427,7 @@ function Home() {
             />
           ))}
           <TopCreators />
-          <BrowseByGenre onSelect={setSearchQuery} />
+          <BrowseByGenre onSelect={setSelectedGenre} />
         </main>
 
         <aside className="space-y-3 xl:col-span-2 xl:grid xl:grid-cols-2">
@@ -452,6 +479,91 @@ function Home() {
         </aside>
 
       </div>
+
+      {selectedGenre && (
+        <CategoryModal
+          genre={selectedGenre}
+          games={genreGames}
+          onClose={() => setSelectedGenre(null)}
+          onOpenGame={openGameById}
+        />
+      )}
+    </div>
+  );
+}
+
+function CategoryModal({
+  genre,
+  games,
+  onClose,
+  onOpenGame,
+}: {
+  genre: string;
+  games: Game[];
+  onClose: () => void;
+  onOpenGame: (game: Game) => void;
+}) {
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#f3f0e8]/95 p-3 backdrop-blur-sm sm:p-6"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${genre} games`}
+        className="flex max-h-[90vh] w-full max-w-7xl flex-col overflow-hidden rounded-none border-2 border-black bg-white shadow-card"
+      >
+        <header className="flex shrink-0 items-center justify-between border-b border-border/60 px-4 py-4 sm:px-6">
+          <div>
+            <h2 className="font-display text-lg font-black uppercase sm:text-xl">{genre}</h2>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              {games.length} {games.length === 1 ? "game" : "games"} in this genre
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            title="Close"
+            className="grid size-9 place-items-center rounded-none border-2 border-black bg-white text-black transition hover:bg-primary"
+          >
+            <X className="size-5" />
+          </button>
+        </header>
+        <div className="overflow-y-auto p-4 sm:p-6">
+          {games.length === 0 ? (
+            <div className="grid place-items-center py-20 text-center">
+              <p className="font-display text-base font-black uppercase">No games yet</p>
+              <p className="mt-2 max-w-xs text-xs text-muted-foreground">
+                There are no {genre} games to explore right now. Check back soon or create one.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {games.map((game, index) => (
+                <GameTile
+                  key={`${game.title}-genre-${index}`}
+                  game={game}
+                  onOpen={() => onOpenGame(game)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
