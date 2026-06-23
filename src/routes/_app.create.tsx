@@ -371,7 +371,7 @@ function Create() {
                   <BriefcaseBusiness className="size-5 text-pink-300" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="label-mono block text-xs font-black tracking-[0.14em] text-white">PURE AGENT STRATEGY</span>
+                  <span className="label-mono block text-xs font-black tracking-[0.14em] text-white">AGENT MODE</span>
                   <span className="mt-0.5 block text-[11px] leading-relaxed text-white/65">
                     {buildingStrategy === "pure-agent" ? "Building your game…" : "Let the AI agent handle everything from idea to game."}
                   </span>
