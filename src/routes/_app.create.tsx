@@ -112,6 +112,12 @@ function Create() {
   // chat only writes studio.prompt at the final "Ok, create it!" step.
   const chatPrompt = [gameRequest, vibeRequest].filter(Boolean).join(". ");
 
+  // Keep studio.prompt in sync with the input field so it doubles as a live prompt.
+  useEffect(() => {
+    const trimmed = chatInput.trim();
+    if (trimmed) studio.setPrompt(trimmed);
+  }, [chatInput]);
+
   const build = async (strategy: "pure-agent" | "hybrid", promptOverride = "") => {
     const buildPrompt = promptOverride || chatInput.trim() || chatPrompt || studio.prompt;
     if (!buildPrompt.trim() || phase === "building") return;
@@ -353,7 +359,7 @@ function Create() {
                 <span className="min-w-0 flex-1">
                   <span className="label-mono block text-xs font-black tracking-[0.14em] text-white">HYBRID MODE</span>
                   <span className="mt-0.5 block text-[11px] leading-relaxed text-white/65">
-                    {buildingStrategy === "hybrid" ? "Building your game…" : "Best of both worlds. AI designs, you refine."}
+                    {buildingStrategy === "hybrid" ? "Building your game…" : "Fast."}
                   </span>
                 </span>
                 <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 text-white transition group-hover:bg-white/20">
