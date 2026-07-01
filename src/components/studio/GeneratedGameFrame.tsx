@@ -47,6 +47,36 @@ function buildSrcDoc(code: string, pkg: AnyPackage): string {
 <body>
 <canvas id="game"></canvas>
 <script type="module">
+// --- Storage shim -----------------------------------------------------------
+// The frame is sandboxed WITHOUT allow-same-origin (keeps generated code off
+// the parent origin), so reading window.localStorage / sessionStorage throws
+// "SecurityError ... document is sandboxed and lacks the 'allow-same-origin'
+// flag". Many generated games save high scores/settings there and would crash
+// on load. Give them a working in-memory Storage so gameplay is unchanged;
+// data just doesn't persist across reloads (which a sandboxed frame can't do
+// anyway).
+(function () {
+  function makeStorage() {
+    const map = new Map();
+    return {
+      getItem: function (k) { return map.has(String(k)) ? map.get(String(k)) : null; },
+      setItem: function (k, v) { map.set(String(k), String(v)); },
+      removeItem: function (k) { map.delete(String(k)); },
+      clear: function () { map.clear(); },
+      key: function (i) { return Array.from(map.keys())[i] || null; },
+      get length() { return map.size; },
+    };
+  }
+  ["localStorage", "sessionStorage"].forEach(function (name) {
+    let ok = false;
+    try { const s = window[name]; s.getItem("__probe"); ok = true; } catch (e) { ok = false; }
+    if (!ok) {
+      try {
+        Object.defineProperty(window, name, { value: makeStorage(), configurable: true });
+      } catch (e) {}
+    }
+  });
+})();
 // Surface runtime errors to the host app (the editor turns them into
 // one-click "fix this" requests for the agent).
 function reportGameError(message, stack) {
